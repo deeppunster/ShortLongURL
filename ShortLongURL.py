@@ -98,39 +98,41 @@ class URLShortener(object):
         short_url = self.url_dict.get(long_url, None)
         return short_url
 
-    def compare_lsl(self, orig_url, short_url, comparison_url):
-        """
-        Display the original url, the short replacement, and if we got the
-        same back.
 
-        :param orig_url: original url
-        :param short_url: short string substitute
-        :param comparison_url: long url returned after lookup
-        """
-        if orig_url == comparison_url:
-            msg = 'Success!!!'
-        else:
-            msg = '>>>>> BAD <<<<<'
-        print(f'LSL - Original: {orig_url}, short: {short_url}, returned: '
-              f'{comparison_url}, Result: {msg} ')
-        return
+def compare_lsl(orig_url, short_url, comparison_url):
+    """
+    Display the original url, the short replacement, and if we got the
+    same back.
 
-    def compare_dup(self, long_url, first_short_url, second_short_url):
-        """
-        Display the long url, both short urls, and match status.
+    :param orig_url: original url
+    :param short_url: short string substitute
+    :param comparison_url: long url returned after lookup
+    """
+    if orig_url == comparison_url:
+        msg = 'Success!!!'
+    else:
+        msg = '>>>>> BAD <<<<<'
+    print(f'LSL - Original: {orig_url}, short: {short_url}, returned: '
+          f'{comparison_url}, Result: {msg} ')
+    return
 
-        :param long_url: original url
-        :param first_short_url: first short string substitute returned
-        :param second_short_url: second short string substitute returned
-        :return:
-        """
-        if first_short_url == second_short_url:
-            msg = 'Success!!!'
-        else:
-            msg = '>>>>> BAD <<<<<'
-        print(f'Dup Original: {long_url}, first: {first_short_url}, second: '
-              f'{second_short_url}, result: {msg}')
-        return
+
+def compare_dup(long_url, first_short_url, second_short_url):
+    """
+    Display the long url, both short urls, and match status.
+
+    :param long_url: original url
+    :param first_short_url: first short string substitute returned
+    :param second_short_url: second short string substitute returned
+    :return:
+    """
+    if first_short_url == second_short_url:
+        msg = 'Success!!!'
+    else:
+        msg = '>>>>> BAD <<<<<'
+    print(f'Dup Original: {long_url}, first: {first_short_url}, second: '
+          f'{second_short_url}, result: {msg}')
+    return
 
 
 if __name__ == '__main__':
@@ -154,9 +156,9 @@ if __name__ == '__main__':
     long_url_3 = short_long.restore(short_url_3)
 
     # compare return values with original
-    short_long.compare_lsl(url_1, short_url_1, long_url_1)
-    short_long.compare_lsl(url_2, short_url_2, long_url_2)
-    short_long.compare_lsl(url_3, short_url_3, long_url_3)
+    compare_lsl(url_1, short_url_1, long_url_1)
+    compare_lsl(url_2, short_url_2, long_url_2)
+    compare_lsl(url_3, short_url_3, long_url_3)
 
     # bonus - see if we get duplicate short url for same long url
     short_url_4 = short_long.shorten(url_1)
@@ -164,8 +166,8 @@ if __name__ == '__main__':
     short_url_6 = short_long.shorten(url_3)
 
     # compare for duplicate short urls
-    short_long.compare_dup(url_1, short_url_1, short_url_4)
-    short_long.compare_dup(url_2, short_url_2, short_url_5)
-    short_long.compare_dup(url_3, short_url_3, short_url_6)
+    compare_dup(url_1, short_url_1, short_url_4)
+    compare_dup(url_2, short_url_2, short_url_5)
+    compare_dup(url_3, short_url_3, short_url_6)
 
 # EOF
