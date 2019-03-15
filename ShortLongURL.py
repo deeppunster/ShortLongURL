@@ -46,8 +46,8 @@ class URLShortener(object):
         """
         Restore the full url if known.
 
-        :param short_url:
-        :return:
+        :param short_url: short string substitute
+        :return: original url
         """
         full_url = self.url_dict.get(short_url, None)
         return full_url
@@ -56,7 +56,7 @@ class URLShortener(object):
         """
         Get a random short url to add to url dictionary.
 
-        :param long_url:
+        :param long_url: original url
         :return: a short url associated with this long url in the dictionary
         """
         key_in_dict = True
@@ -73,7 +73,7 @@ class URLShortener(object):
         """
         Generate a random sequence of letters and digits - six chars long.
 
-        :return:
+        :return: a six character random string
         """
         short_url_6_chars = ''.join(choice(self.alphabet) for i in range(6))
         return short_url_6_chars
@@ -82,9 +82,8 @@ class URLShortener(object):
         """
         Add the short url to the dict with the long url as the key.
 
-        :param long_url:
-        :param short_url:
-        :return:
+        :param long_url: original url to stash
+        :param short_url: short substitute associated with original url
         """
         self.url_dict[long_url] = short_url
         return
@@ -99,12 +98,30 @@ class URLShortener(object):
         short_url = self.url_dict.get(long_url, None)
         return short_url
 
+    def compare_lsl(self, orig_url, short_url, comparison_url):
+        """
+        Display the original url, the short replacement, and if we got the
+        same back.
+
+        :param orig_url: original url
+        :param short_url: short string substitute
+        :param comparison_url: long url returned after lookup
+        """
+        if orig_url == comparison_url:
+            msg = 'Success!!!'
+        else:
+            msg = '>>>>> BAD <<<<<'
+        print(f'LSL - Original: {orig_url}, short: {short_url}, returned: '
+              f'{comparison_url}, Result: {msg} ')
+        return
+
     def compare_dup(self, long_url, first_short_url, second_short_url):
         """
         Display the long url, both short urls, and match status.
-        :param long_url:
-        :param first_short_url:
-        :param second_short_url:
+
+        :param long_url: original url
+        :param first_short_url: first short string substitute returned
+        :param second_short_url: second short string substitute returned
         :return:
         """
         if first_short_url == second_short_url:
@@ -115,30 +132,12 @@ class URLShortener(object):
               f'{second_short_url}, result: {msg}')
         return
 
-    def compare_lsl(self, orig_url, short_url, comparison_url):
-        """
-        Display the original url, the short replacement, and if we got the
-        same back.
-
-        :param orig_url:
-        :param short_url:
-        :param comparison_url:
-        :return:
-        """
-        if orig_url == comparison_url:
-            msg = 'Success!!!'
-        else:
-            msg = '>>>>> BAD <<<<<'
-        print(f'LSL - Original: {orig_url}, short: {short_url}, returned: '
-              f'{comparison_url}, Result: {msg} ')
-        return
-
 
 if __name__ == '__main__':
     # test data
     url_1 = 'http://localhost:63342/Food-Pantry-Inventory/docs/build/html' \
             '/UML%20Diagrams.html'
-    url_2 = 'https://github.com/deeppunster/Christmas-Labels.git'
+    url_2 = 'https://github.com/deeppunster/ShortLongURL.git'
     url_3 = 'https://krebsonsecurity.com/'
 
     # establish instance of class
